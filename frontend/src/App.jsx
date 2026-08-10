@@ -13,7 +13,7 @@ import {
 
 /* ============================== API ============================== */
 
-const API_BASE = (import.meta.env.VITE_API_BASE || "http://localhost:8000").replace(/\/$/, "");
+const API_BASE = (import.meta.env.VITE_API_BASE || "https://face-detection-notifications-ready.onrender.com").replace(/\/$/, "");
 
 async function apiFetch(path, { token, method = "GET", body, isForm = false } = {}) {
   const headers = {};
