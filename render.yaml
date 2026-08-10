@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: verify-attendance-api
+    runtime: python
+    plan: starter
+    rootDir: attendance-backend/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: DB_PATH
+        value: /data/attendance.db
+      - key: INSIGHTFACE_CTX_ID
+        value: "-1"
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: WHATSAPP_ACCESS_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      - key: WHATSAPP_TEMPLATE_NAME
+        sync: false
+      - key: WHATSAPP_TEMPLATE_LANG
+        value: en_US
+      - key: WHATSAPP_GRAPH_VERSION
+        value: v23.0
+    disk:
+      name: attendance-data
+      mountPath: /data
+      sizeGB: 5
+
+  - type: web
+    name: verify-attendance-frontend
+    runtime: static
+    rootDir: attendance-frontend/frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE
+        sync: false
