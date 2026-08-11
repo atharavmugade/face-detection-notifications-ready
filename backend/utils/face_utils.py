@@ -4,7 +4,7 @@ from insightface.app import FaceAnalysis
 from database import db
 
 DET_SIZE = (320, 320)
-MIN_DET_SCORE = 0.55
+MIN_DET_SCORE = 0.30
 
 _app = None
 
